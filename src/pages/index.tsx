@@ -34,8 +34,8 @@ interface PokemonNameProps {
 
 const Home: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [pokemonList, setpokemonList] = useState<PokemonsProps[]>([]);
   const [pokemons, setPokemons] = useState<PokemonsProps[]>([]);
-  const [pokemonSearch, setpokemonSearch] = useState<PokemonsProps[]>([]);
   const [loading, setLoading] = useState(false);
 
   const getPokemon = useCallback(async () => {
@@ -55,8 +55,8 @@ const Home: React.FC = () => {
       );
 
       if (pokemonInfo) {
+        setpokemonList(pokemonInfo);
         setPokemons(pokemonInfo);
-        setpokemonSearch(pokemonInfo);
       }
     } catch (err) {
       throw new Error(err);
@@ -71,17 +71,17 @@ const Home: React.FC = () => {
 
   const handleSearch = useCallback(() => {
     const inputValue = inputRef.current.value;
-    if (pokemons) {
-      const match = pokemons.filter(item => {
+    if (pokemonList) {
+      const match = pokemonList.filter(item => {
         if (item.name.includes(inputValue.toLowerCase())) {
           return item;
         }
         return null;
       });
 
-      setpokemonSearch(match);
+      setPokemons(match);
     }
-  }, [pokemons]);
+  }, [pokemonList]);
 
   if (loading) {
     return <Loading />;
@@ -105,7 +105,7 @@ const Home: React.FC = () => {
 
         <CardContainer>
           {pokemons &&
-            pokemonSearch.map(pokemon => (
+            pokemons.map(pokemon => (
               <Card type={pokemon.types[0].type.name} key={pokemon.id}>
                 <span>{`#${pokemon.id}`}</span>
                 <div>
