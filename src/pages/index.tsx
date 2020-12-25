@@ -1,16 +1,14 @@
-import Head from 'next/head';
+import Header from '@/components/Header';
+import { useCallback, useEffect, useState } from 'react';
 
 const Home: React.FC = () => {
   return (
-    <div>
-      <Head>
-        <title>Home Page</title>
-      </Head>
-
+    <>
+      <Header />
       <main>
         <h1>Hello World</h1>
       </main>
-    </div>
+    </>
   );
 };
 
