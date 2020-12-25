@@ -13,6 +13,7 @@ import {
   AvatarContainer,
   TypeColors,
 } from '@/styles/pages/Home';
+import SEO from '@/components/SEO';
 
 interface PokemonsProps {
   id: number;
@@ -34,32 +35,37 @@ interface PokemonNameProps {
 const Home: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [pokemons, setPokemons] = useState<PokemonsProps[]>([]);
+  const [pokemonSearch, setpokemonSearch] = useState<PokemonsProps[]>([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const getPokemon = async () => {
-      try {
-        setLoading(true);
-        const response = await api.get<PokemonNameProps>('pokemon?limit=151');
+  const getPokemon = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await api.get<PokemonNameProps>('pokemon?limit=151');
 
-        const names = response.data.results.map(pokemon => pokemon.name);
+      const names = response.data.results.map(pokemon => pokemon.name);
 
-        const pokemonInfo = await Promise.all(
-          names.map(async pokemonlist => {
-            const results = await api.get<PokemonsProps>(
-              `pokemon/${pokemonlist}`,
-            );
-            return results.data;
-          }),
-        );
+      const pokemonInfo = await Promise.all(
+        names.map(async pokemonlist => {
+          const results = await api.get<PokemonsProps>(
+            `pokemon/${pokemonlist}`,
+          );
+          return results.data;
+        }),
+      );
 
-        if (pokemonInfo) setPokemons(pokemonInfo);
-      } catch (err) {
-        throw new Error(err);
-      } finally {
-        setLoading(false);
+      if (pokemonInfo) {
+        setPokemons(pokemonInfo);
+        setpokemonSearch(pokemonInfo);
       }
-    };
+    } catch (err) {
+      throw new Error(err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
     getPokemon();
   }, []);
 
@@ -70,10 +76,10 @@ const Home: React.FC = () => {
         if (item.name.includes(inputValue.toLowerCase())) {
           return item;
         }
+        return null;
       });
 
-      console.log(match);
-      // setPokemons(match);
+      setpokemonSearch(match);
     }
   }, [pokemons]);
 
@@ -84,6 +90,7 @@ const Home: React.FC = () => {
   return (
     <>
       <Header />
+      <SEO title="Pokédex" />
       <Container>
         <InputContainer>
           <label htmlFor="search">Search</label>
@@ -98,7 +105,7 @@ const Home: React.FC = () => {
 
         <CardContainer>
           {pokemons &&
-            pokemons.map(pokemon => (
+            pokemonSearch.map(pokemon => (
               <Card type={pokemon.types[0].type.name} key={pokemon.id}>
                 <span>{`#${pokemon.id}`}</span>
                 <div>

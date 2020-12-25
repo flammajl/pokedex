@@ -1,10 +1,14 @@
 import { Container } from '@/styles/pages/Loading';
+import Header from './Header';
 
 const Loading: React.FC = () => {
   return (
-    <Container>
-      <h1>Loading...</h1>
-    </Container>
+    <>
+      <Header />
+      <Container>
+        <h1>Loading...</h1>
+      </Container>
+    </>
   );
 };
 
