@@ -1,33 +1,11 @@
 import Header from '@/components/Header';
-import Image from 'next/image';
-import Link from 'next/link';
 import Loading from '@/components/Loading';
 import api from '@/services/api';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  Container,
-  InputContainer,
-  CardContainer,
-  Card,
-  TypeContainer,
-  Type,
-  AvatarContainer,
-  TypeColors,
-} from '@/styles/pages/Home';
+import { Container, InputContainer, CardContainer } from '@/styles/pages/Home';
 import SEO from '@/components/SEO';
-
-interface PokemonsProps {
-  id: number;
-  name: string;
-  types: {
-    type: {
-      name: keyof typeof TypeColors;
-    };
-  }[];
-  sprites: {
-    front_default: string;
-  };
-}
+import Pokemon from '@/components/Pokemon';
+import useSWR from 'swr';
 
 interface PokemonNameProps {
   results: { name: string }[];
@@ -35,41 +13,19 @@ interface PokemonNameProps {
 
 const Home: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [pokemonList, setpokemonList] = useState<PokemonsProps[]>([]);
-  const [pokemons, setPokemons] = useState<PokemonsProps[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [pokemons, setPokemons] = useState<string[]>([]);
   const [listItem, setListItem] = useState(10);
 
-  const getPokemon = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await api.get<PokemonNameProps>('pokemon?limit=151');
+  const { data } = useSWR('pokemon?limit=151', async urlFetch => {
+    const response = await api.get<PokemonNameProps>(urlFetch);
 
-      const names = response.data.results.map(pokemon => pokemon.name);
+    const names = response.data.results.map(name => name.name);
 
-      const pokemonInfo = await Promise.all(
-        names.map(async pokemonlist => {
-          const results = await api.get<PokemonsProps>(
-            `pokemon/${pokemonlist}`,
-          );
-          return results.data;
-        }),
-      );
-
-      if (pokemonInfo) {
-        setpokemonList(pokemonInfo);
-        setPokemons(pokemonInfo);
-      }
-    } catch (err) {
-      throw new Error(err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    return names;
+  });
 
   useEffect(() => {
-    getPokemon();
-
+    setPokemons(data);
     let wait = false;
 
     const infiniteScroll = () => {
@@ -91,13 +47,13 @@ const Home: React.FC = () => {
       window.removeEventListener('wheel', infiniteScroll);
       window.removeEventListener('scroll', infiniteScroll);
     };
-  }, [getPokemon]);
+  }, [data]);
 
   const handleSearch = useCallback(() => {
     const inputValue = inputRef.current.value;
-    if (pokemonList) {
-      const match = pokemonList.filter(item => {
-        if (item.name.includes(inputValue.toLowerCase())) {
+    if (data) {
+      const match = data.filter(item => {
+        if (item.includes(inputValue.toLowerCase())) {
           return item;
         }
         return null;
@@ -105,9 +61,9 @@ const Home: React.FC = () => {
 
       setPokemons(match);
     }
-  }, [pokemonList]);
+  }, [data]);
 
-  if (loading) {
+  if (!data) {
     return <Loading />;
   }
 
@@ -129,37 +85,9 @@ const Home: React.FC = () => {
 
         <CardContainer>
           {pokemons &&
-            pokemons.slice(0, listItem).map(pokemon => (
-              <Link href={`/pokemon/${pokemon.name}`} key={pokemon.id}>
-                <a>
-                  <Card type={pokemon.types[0].type.name}>
-                    <span>{`#${pokemon.id}`}</span>
-                    <div>
-                      <h1>{pokemon.name}</h1>
-                      <TypeContainer>
-                        <Type>
-                          {pokemon.types &&
-                            pokemon.types.map(type => (
-                              <div key={`${type.type.name}`}>
-                                <h2>{type.type.name}</h2>
-                              </div>
-                            ))}
-                        </Type>
-                        <AvatarContainer>
-                          {pokemon.sprites && (
-                            <Image
-                              src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
-                              width={64}
-                              height={64}
-                            />
-                          )}
-                        </AvatarContainer>
-                      </TypeContainer>
-                    </div>
-                  </Card>
-                </a>
-              </Link>
-            ))}
+            pokemons
+              .slice(0, listItem)
+              .map(pokemon => <Pokemon key={pokemon} pokemonName={pokemon} />)}
         </CardContainer>
       </Container>
     </>

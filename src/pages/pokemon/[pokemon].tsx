@@ -1,12 +1,12 @@
-import api from '@/services/api';
 import { TypeColors } from '@/styles/pages/Home';
 import { useRouter } from 'next/router';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { About, Section, Type } from '@/styles/pages/Pokemon';
 import Link from 'next/link';
 import SEO from '@/components/SEO';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import { useFetch } from '@/hooks/useFetch';
 import ArrowLeft from '../../assets/arrow-left.svg';
 
 export interface PokemonInfo {
@@ -39,36 +39,18 @@ export interface PokemonInfo {
 const DynamicComponent = dynamic(() => import('../../components/DynamicInfo'));
 
 const Pokemon: React.FC = () => {
-  const [pokemonData, setPokemonData] = useState<PokemonInfo>(
-    {} as PokemonInfo,
-  );
-  const [loading, setLoading] = useState(false);
   const [info, setInfo] = useState('about');
 
   const router = useRouter();
   const { pokemon } = router.query;
 
-  const getPokemonInfo = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await api.get(`pokemon/${pokemon}`);
-      setPokemonData(response.data);
-    } catch (err) {
-      throw new Error(err);
-    } finally {
-      setLoading(false);
-    }
-  }, [pokemon]);
-
-  useEffect(() => {
-    getPokemonInfo();
-  }, [getPokemonInfo]);
+  const { data: pokemonData } = useFetch<PokemonInfo>(`pokemon/${pokemon}`);
 
   const handleInfo = useCallback((infoChange: string) => {
     setInfo(infoChange);
   }, []);
 
-  if (loading) {
+  if (!pokemonData) {
     return <p>Loading...</p>;
   }
 
