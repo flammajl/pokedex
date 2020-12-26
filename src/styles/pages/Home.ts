@@ -58,9 +58,17 @@ export const InputContainer = styled.div`
       width: 400px;
     }
 
+    @media (max-width: 440px) {
+      width: 200px;
+    }
+
     &::placeholder {
       font-size: 1.125rem;
       color: #ddd;
+
+      @media (max-width: 440px) {
+        font-size: 0.75rem;
+      }
     }
 
     &:focus {
@@ -73,7 +81,8 @@ export const CardContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
-  margin-bottom: 60px;
+  margin: 0 0 60px 0;
+  max-width: 100%;
 
   @media (max-width: 1685px) {
     grid-template-columns: repeat(4, 1fr);
@@ -82,7 +91,14 @@ export const CardContainer = styled.div`
     grid-template-columns: repeat(3, 1fr);
   }
   @media (max-width: 1035px) {
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  @media (max-width: 440px) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 `;
 
