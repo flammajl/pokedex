@@ -40,6 +40,10 @@ export const InputContainer = styled.div`
   label {
     font-size: 2.25rem;
     font-weight: bold;
+
+    @media (max-width: 1035px) {
+      font-size: 1.5rem;
+    }
   }
 
   input {
@@ -49,6 +53,10 @@ export const InputContainer = styled.div`
     border-radius: 20px;
     border: 1px solid #000;
     outline: none;
+
+    @media (max-width: 1035px) {
+      width: 400px;
+    }
 
     &::placeholder {
       font-size: 1.125rem;
@@ -66,6 +74,16 @@ export const CardContainer = styled.div`
   grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
   margin-bottom: 60px;
+
+  @media (max-width: 1685px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 1035px) {
+    grid-template-columns: 1fr 1fr;
+  }
 `;
 
 export const Card = styled(motion.div)<CardProps>`
@@ -79,11 +97,21 @@ export const Card = styled(motion.div)<CardProps>`
     css`
       background: ${TypeColors[props.type]};
     `}
+
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 150px;
+  }
+
   span {
     position: absolute;
     color: rgba(0, 0, 0, 0.5);
     top: 20px;
     right: 20px;
+
+    @media (max-width: 768px) {
+      font-size: 0.875rem;
+    }
   }
 
   > div {
@@ -92,11 +120,20 @@ export const Card = styled(motion.div)<CardProps>`
     padding-top: 36px;
     padding-left: 24px;
 
+    @media (max-width: 768px) {
+      padding-top: 16px;
+      padding-left: 8px;
+    }
+
     h1 {
       font-size: 1.125rem;
       color: #fff;
       font-weight: normal;
       text-transform: capitalize;
+
+      @media (max-width: 768px) {
+        font-size: 0.875rem;
+      }
     }
   }
 `;
@@ -119,6 +156,10 @@ export const Type = styled.div`
     padding: 8px 12px;
     margin-top: 24px;
 
+    @media (max-width: 768px) {
+      margin-top: 1rem;
+    }
+
     h2 {
       font-weight: normal;
       font-size: 0.75rem;
@@ -129,6 +170,7 @@ export const Type = styled.div`
 
 export const AvatarContainer = styled.div`
   background: url('/images/pokeball-bg.png') center center no-repeat;
+  background-size: cover;
   width: 150px;
   height: 150px;
   position: relative;
@@ -136,6 +178,13 @@ export const AvatarContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    width: 100px;
+    height: 100px;
+    top: 5px;
+    right: -5px;
+  }
 
   img {
     width: 64px;

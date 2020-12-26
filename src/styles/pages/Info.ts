@@ -16,6 +16,10 @@ export const Info = styled.section`
       h3 {
         font-size: 1.125rem;
         text-transform: capitalize;
+
+        @media (max-width: 768px) {
+          font-size: 1rem;
+        }
       }
 
       span {
@@ -52,6 +56,10 @@ export const BaseWrapper = styled.section`
       h3 {
         font-size: 1.125rem;
         text-transform: capitalize;
+
+        @media (max-width: 768px) {
+          font-size: 1rem;
+        }
       }
 
       span {
@@ -67,8 +75,16 @@ export const MovesWrapper = styled.section`
   > div {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    gap: 1rem;
+    gap: 1.5rem;
     padding-bottom: 1rem;
+
+    @media (max-width: 1300px) {
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2rem;
+    }
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
 
     p {
       text-transform: capitalize;

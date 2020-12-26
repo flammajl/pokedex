@@ -20,6 +20,10 @@ export const Container = styled.header`
       font-size: 3rem;
       font-weight: bold;
       color: #fff;
+
+      @media (max-width: 1035px) {
+        font-size: 2rem;
+      }
     }
   }
 `;

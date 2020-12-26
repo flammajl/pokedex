@@ -23,11 +23,31 @@ export const Section = styled(motion.section)<SectionColor>`
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      @media (max-width: 1200px) {
+        img {
+          width: 250px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        padding: 40px 0;
+        img {
+          width: 150px;
+        }
+        span {
+          display: none;
+        }
+      }
     }
 
     h1 {
       text-transform: capitalize;
       font-size: 3rem;
+
+      @media (max-width: 900px) {
+        font-size: 2rem;
+      }
     }
 
     > div {
@@ -68,6 +88,13 @@ export const About = styled.section`
   border-top-right-radius: 50px;
   height: calc(100vh - 400px);
 
+  @media (max-width: 1200px) {
+    height: calc(100vh - 250px);
+  }
+  @media (max-width: 768px) {
+    height: calc(100vh - 230px);
+  }
+
   > div {
     max-width: 90%;
     margin: 0 auto;
@@ -83,15 +110,47 @@ export const About = styled.section`
         font-size: 1.5rem;
         background: none;
         border: none;
+
+        @media (max-width: 1200px) {
+          font-size: 1.125rem;
+        }
+
+        @media (max-width: 768px) {
+          font-size: 1rem;
+        }
       }
     }
 
     > figure {
-      width: 300px;
-      height: 300px;
       position: absolute;
       top: -27%;
       right: 25%;
+
+      @media (max-width: 1200px) {
+        img {
+          width: 150px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        img {
+          width: 100px;
+        }
+      }
+    }
+
+    @media (max-width: 1200px) {
+      > figure {
+        top: -30%;
+        right: 10%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      > figure {
+        top: -23%;
+        right: 9%;
+      }
     }
   }
 `;
