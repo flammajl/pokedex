@@ -6,8 +6,8 @@ import {
   TypeColors,
   TypeContainer,
 } from '@/styles/pages/Home';
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
 import Loading from './Loading';
 
 interface PokemonProps {
@@ -37,27 +37,31 @@ const Pokemon: React.FC<PokemonProps> = ({ pokemonName }) => {
   return (
     <Link href={`/pokemon/${pokemon.name}`} key={pokemon.id}>
       <a>
-        <Card type={pokemon.types[0].type.name}>
+        <Card
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          type={pokemon.types[0].type.name}
+        >
           <span>{`#${pokemon.id}`}</span>
           <div>
             <h1>{pokemon.name}</h1>
             <TypeContainer>
               <Type>
-                {pokemon.types &&
-                  pokemon.types.map(type => (
-                    <div key={`${type.type.name}`}>
-                      <h2>{type.type.name}</h2>
-                    </div>
-                  ))}
+                {pokemon.types.map(type => (
+                  <div key={`${type.type.name}`}>
+                    <h2>{type.type.name}</h2>
+                  </div>
+                ))}
               </Type>
               <AvatarContainer>
-                {pokemon.sprites && (
+                <figure>
                   <Image
                     src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
-                    width={64}
-                    height={64}
+                    width={50}
+                    height={50}
                   />
-                )}
+                </figure>
               </AvatarContainer>
             </TypeContainer>
           </div>

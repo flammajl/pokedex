@@ -1,11 +1,12 @@
 import styled, { css } from 'styled-components';
+import { motion } from 'framer-motion';
 import { TypeColors } from './Home';
 
 interface SectionColor {
   pokemonType: keyof typeof TypeColors;
 }
 
-export const Section = styled.section<SectionColor>`
+export const Section = styled(motion.section)<SectionColor>`
   height: 100vh;
   ${props =>
     props.pokemonType &&
@@ -85,7 +86,7 @@ export const About = styled.section`
       }
     }
 
-    > div {
+    > figure {
       width: 300px;
       height: 300px;
       position: absolute;

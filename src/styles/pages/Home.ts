@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { motion } from 'framer-motion';
 
 export enum TypeColors {
   grass = '#78C850',
@@ -67,7 +68,7 @@ export const CardContainer = styled.div`
   margin-bottom: 60px;
 `;
 
-export const Card = styled.div<CardProps>`
+export const Card = styled(motion.div)<CardProps>`
   width: 300px;
   height: 200px;
   margin-top: 72px;
@@ -135,4 +136,8 @@ export const AvatarContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  img {
+    width: 64px;
+  }
 `;

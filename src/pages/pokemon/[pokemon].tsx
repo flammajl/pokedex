@@ -4,9 +4,9 @@ import { memo, useCallback, useState } from 'react';
 import { About, Section, Type } from '@/styles/pages/Pokemon';
 import Link from 'next/link';
 import SEO from '@/components/SEO';
-import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { useFetch } from '@/hooks/useFetch';
+import Image from 'next/image';
 import ArrowLeft from '../../assets/arrow-left.svg';
 
 export interface PokemonInfo {
@@ -54,12 +54,16 @@ const Pokemon: React.FC = () => {
     return <p>Loading...</p>;
   }
 
-  if (!pokemonData.types) return null;
-
   return (
     pokemonData && (
-      <Section pokemonType={pokemonData.types[0].type.name}>
+      <Section
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        pokemonType={pokemonData.types[0].type.name}
+      >
         <SEO title={`${pokemonData.name} | Pokédex`} />
+
         <div>
           <section>
             <Link href="/">
@@ -83,13 +87,13 @@ const Pokemon: React.FC = () => {
         </div>
         <About>
           <div>
-            <div>
+            <figure>
               <Image
                 src={`https://pokeres.bastionbot.org/images/pokemon/${pokemonData.id}.png`}
                 width={200}
                 height={200}
               />
-            </div>
+            </figure>
 
             <ul>
               <li>
