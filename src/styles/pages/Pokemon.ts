@@ -89,8 +89,8 @@ export const About = styled.section`
       width: 300px;
       height: 300px;
       position: absolute;
-      top: -150px;
-      right: 500px;
+      top: -27%;
+      right: 25%;
     }
   }
 `;

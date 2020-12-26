@@ -38,6 +38,7 @@ const Home: React.FC = () => {
   const [pokemonList, setpokemonList] = useState<PokemonsProps[]>([]);
   const [pokemons, setPokemons] = useState<PokemonsProps[]>([]);
   const [loading, setLoading] = useState(false);
+  const [listItem, setListItem] = useState(10);
 
   const getPokemon = useCallback(async () => {
     try {
@@ -68,6 +69,28 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     getPokemon();
+
+    let wait = false;
+
+    const infiniteScroll = () => {
+      const scroll = window.scrollY;
+      const height = document.body.offsetHeight - window.innerHeight;
+
+      if (!wait && scroll > height) {
+        wait = true;
+        setListItem(item => item + 10);
+        setTimeout(() => {
+          wait = false;
+        }, 500);
+      }
+    };
+
+    window.addEventListener('wheel', infiniteScroll);
+    window.addEventListener('scroll', infiniteScroll);
+    return () => {
+      window.removeEventListener('wheel', infiniteScroll);
+      window.removeEventListener('scroll', infiniteScroll);
+    };
   }, [getPokemon]);
 
   const handleSearch = useCallback(() => {
@@ -106,7 +129,7 @@ const Home: React.FC = () => {
 
         <CardContainer>
           {pokemons &&
-            pokemons.map(pokemon => (
+            pokemons.slice(0, listItem).map(pokemon => (
               <Link href={`/pokemon/${pokemon.name}`} key={pokemon.id}>
                 <a>
                   <Card type={pokemon.types[0].type.name}>
