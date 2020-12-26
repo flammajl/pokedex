@@ -1,31 +1,27 @@
 import Header from '@/components/Header';
 import Loading from '@/components/Loading';
 import api from '@/services/api';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Container, InputContainer, CardContainer } from '@/styles/pages/Home';
 import SEO from '@/components/SEO';
 import Pokemon from '@/components/Pokemon';
-import useSWR from 'swr';
+import { GetStaticProps } from 'next';
 
 interface PokemonNameProps {
   results: { name: string }[];
 }
 
-const Home: React.FC = () => {
+interface DataProps {
+  names: string[];
+}
+
+const Home: React.FC<DataProps> = ({ names }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [pokemons, setPokemons] = useState<string[]>([]);
   const [listItem, setListItem] = useState(10);
 
-  const { data } = useSWR('pokemon?limit=151', async urlFetch => {
-    const response = await api.get<PokemonNameProps>(urlFetch);
-
-    const names = response.data.results.map(name => name.name);
-
-    return names;
-  });
-
   useEffect(() => {
-    setPokemons(data);
+    setPokemons(names);
     let wait = false;
 
     const infiniteScroll = () => {
@@ -47,12 +43,12 @@ const Home: React.FC = () => {
       window.removeEventListener('wheel', infiniteScroll);
       window.removeEventListener('scroll', infiniteScroll);
     };
-  }, [data]);
+  }, [names]);
 
   const handleSearch = useCallback(() => {
     const inputValue = inputRef.current.value;
-    if (data) {
-      const match = data.filter(item => {
+    if (names) {
+      const match = names.filter(item => {
         if (item.includes(inputValue.toLowerCase())) {
           return item;
         }
@@ -61,9 +57,9 @@ const Home: React.FC = () => {
 
       setPokemons(match);
     }
-  }, [data]);
+  }, [names]);
 
-  if (!data) {
+  if (!names) {
     return <Loading />;
   }
 
@@ -84,14 +80,24 @@ const Home: React.FC = () => {
         </InputContainer>
 
         <CardContainer>
-          {pokemons &&
-            pokemons
-              .slice(0, listItem)
-              .map(pokemon => <Pokemon key={pokemon} pokemonName={pokemon} />)}
+          {pokemons.slice(0, listItem).map(pokemon => (
+            <Pokemon key={pokemon} pokemonName={pokemon} />
+          ))}
         </CardContainer>
       </Container>
     </>
   );
 };
 
-export default Home;
+export const getStaticProps: GetStaticProps<DataProps> = async () => {
+  const response = await api.get<PokemonNameProps>('pokemon?limit=151');
+  const names = response.data.results.map(name => name.name);
+
+  return {
+    props: {
+      names,
+    },
+  };
+};
+
+export default memo(Home);
