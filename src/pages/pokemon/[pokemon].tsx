@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic';
 import { useFetch } from '@/hooks/useFetch';
 import Image from 'next/image';
 import ArrowLeft from '../../assets/arrow-left.svg';
+import NotFound from '../404';
 
 export interface PokemonInfo {
   id: number;
@@ -44,11 +45,17 @@ const Pokemon: React.FC = () => {
   const router = useRouter();
   const { pokemon } = router.query;
 
-  const { data: pokemonData } = useFetch<PokemonInfo>(`pokemon/${pokemon}`);
+  const { data: pokemonData, error } = useFetch<PokemonInfo>(
+    `pokemon/${pokemon}`,
+  );
 
   const handleInfo = useCallback((infoChange: string) => {
     setInfo(infoChange);
   }, []);
+
+  if (error) {
+    return <NotFound />;
+  }
 
   if (!pokemonData) {
     return <p>Loading...</p>;
