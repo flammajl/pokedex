@@ -16,7 +16,6 @@ export const Section = styled.section<SectionColor>`
   > div {
     max-width: 90%;
     margin: 0 auto;
-    padding-top: 60px;
     color: #fff;
 
     > section {
@@ -66,7 +65,7 @@ export const About = styled.section`
   background-color: #fff;
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
-  height: 509px;
+  height: calc(100vh - 400px);
 
   > div {
     max-width: 90%;
@@ -78,7 +77,12 @@ export const About = styled.section`
       padding-top: 72px;
       padding-bottom: 32px;
       border-bottom: 2px solid #c4c4c4;
-      font-size: 1.5rem;
+
+      button {
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+      }
     }
 
     > div {
@@ -87,41 +91,6 @@ export const About = styled.section`
       position: absolute;
       top: -150px;
       right: 500px;
-    }
-  }
-`;
-
-export const Info = styled.section`
-  margin-top: 84px;
-
-  > div {
-    div {
-      display: grid;
-      grid-template-columns: 150px 200px;
-      gap: 8px;
-
-      & + div {
-        margin-top: 32px;
-      }
-
-      h3 {
-        font-size: 1.125rem;
-      }
-
-      span {
-        font-size: 0.875rem;
-      }
-
-      ul {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.875rem;
-
-        li {
-          text-transform: capitalize;
-        }
-      }
     }
   }
 `;

@@ -1,14 +1,15 @@
 import api from '@/services/api';
 import { TypeColors } from '@/styles/pages/Home';
 import { useRouter } from 'next/router';
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { About, Section, Type, Info } from '@/styles/pages/Pokemon';
+import { memo, useCallback, useEffect, useState } from 'react';
+import { About, Section, Type } from '@/styles/pages/Pokemon';
 import Link from 'next/link';
 import SEO from '@/components/SEO';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import ArrowLeft from '../../assets/arrow-left.svg';
 
-interface PokemonInfo {
+export interface PokemonInfo {
   id: number;
   abilities: {
     ability: {
@@ -27,14 +28,22 @@ interface PokemonInfo {
       name: keyof typeof TypeColors;
     };
   }[];
+  moves: {
+    move: {
+      name: string;
+    };
+  }[];
   weight: number;
 }
+
+const DynamicComponent = dynamic(() => import('../../components/DynamicInfo'));
 
 const Pokemon: React.FC = () => {
   const [pokemonData, setPokemonData] = useState<PokemonInfo>(
     {} as PokemonInfo,
   );
   const [loading, setLoading] = useState(false);
+  const [info, setInfo] = useState('about');
 
   const router = useRouter();
   const { pokemon } = router.query;
@@ -55,9 +64,9 @@ const Pokemon: React.FC = () => {
     getPokemonInfo();
   }, [getPokemonInfo]);
 
-  const weight = useMemo(() => {
-    return pokemonData.weight / 10;
-  }, [pokemonData.weight]);
+  const handleInfo = useCallback((infoChange: string) => {
+    setInfo(infoChange);
+  }, []);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -101,28 +110,24 @@ const Pokemon: React.FC = () => {
             </div>
 
             <ul>
-              <li>About</li>
-              <li>Base Stats</li>
-              <li>Moves</li>
+              <li>
+                <button onClick={() => handleInfo('about')} type="button">
+                  About
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleInfo('base')} type="button">
+                  Base Stats
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleInfo('moves')} type="button">
+                  Moves
+                </button>
+              </li>
             </ul>
 
-            <Info>
-              <div>
-                <div>
-                  <h3>Weight</h3>
-                  <span>{`${weight} Kg`}</span>
-                </div>
-
-                <div>
-                  <h3>Abilities</h3>
-                  <ul>
-                    {pokemonData.abilities.map(ability => (
-                      <li key={ability.ability.name}>{ability.ability.name}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </Info>
+            <DynamicComponent component={info} data={pokemonData} />
           </div>
         </About>
       </Section>
