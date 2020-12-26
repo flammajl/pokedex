@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Image from 'next/image';
+import Link from 'next/link';
 import Loading from '@/components/Loading';
 import api from '@/services/api';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -67,7 +68,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     getPokemon();
-  }, []);
+  }, [getPokemon]);
 
   const handleSearch = useCallback(() => {
     const inputValue = inputRef.current.value;
@@ -106,31 +107,35 @@ const Home: React.FC = () => {
         <CardContainer>
           {pokemons &&
             pokemons.map(pokemon => (
-              <Card type={pokemon.types[0].type.name} key={pokemon.id}>
-                <span>{`#${pokemon.id}`}</span>
-                <div>
-                  <h1>{pokemon.name}</h1>
-                  <TypeContainer>
-                    <Type>
-                      {pokemon.types &&
-                        pokemon.types.map((type, index) => (
-                          <div key={`${pokemon.name}${index}`}>
-                            <h2>{type.type.name}</h2>
-                          </div>
-                        ))}
-                    </Type>
-                    <AvatarContainer>
-                      {pokemon.sprites && (
-                        <Image
-                          src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
-                          width={64}
-                          height={64}
-                        />
-                      )}
-                    </AvatarContainer>
-                  </TypeContainer>
-                </div>
-              </Card>
+              <Link href={`/pokemon/${pokemon.name}`} key={pokemon.id}>
+                <a>
+                  <Card type={pokemon.types[0].type.name}>
+                    <span>{`#${pokemon.id}`}</span>
+                    <div>
+                      <h1>{pokemon.name}</h1>
+                      <TypeContainer>
+                        <Type>
+                          {pokemon.types &&
+                            pokemon.types.map(type => (
+                              <div key={`${type.type.name}`}>
+                                <h2>{type.type.name}</h2>
+                              </div>
+                            ))}
+                        </Type>
+                        <AvatarContainer>
+                          {pokemon.sprites && (
+                            <Image
+                              src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
+                              width={64}
+                              height={64}
+                            />
+                          )}
+                        </AvatarContainer>
+                      </TypeContainer>
+                    </div>
+                  </Card>
+                </a>
+              </Link>
             ))}
         </CardContainer>
       </Container>
