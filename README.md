@@ -1,34 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pokédex
 
-## Getting Started
+O projeto é uma pokédex dos 151 primeiros pokemons, [layout](https://www.figma.com/file/TEW5aRbdelOXtPJCHgekfF/pokedex?node-id=0%3A1) inspirado por [Saepul Nahwan](https://dribbble.com/shots/6540871-Pokedex-App).
 
-First, run the development server:
+## **:computer: TECNOLOGIAS**
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+  - [NextJS](https://nextjs.org/)
+  - [Typescript](https://www.typescriptlang.org/)
+  - [Styled Components](https://styled-components.com/)
+  - [Framer Motion](https://www.framer.com/motion/)
+  - [Axios](https://github.com/axios/axios)
+  - [SWR](https://swr.vercel.app/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## **:camera: Screenshots**
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+* Home
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+![Home](screenshots/home.png)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+* Scroll Infinito
 
-## Learn More
+![Scroll Infinito](screenshots/scroll-infinito.png)
 
-To learn more about Next.js, take a look at the following resources:
+* Busca
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![Busca](screenshots/busca.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+* Detalhes
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![Detalhes](screenshots/detalhes.png)
