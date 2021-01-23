@@ -33,10 +33,13 @@ export const Section = styled(motion.section)<SectionColor>`
       @media (max-width: 768px) {
         padding: 40px 0;
         img {
-          width: 150px;
+          max-width: 90px;
         }
         span {
           display: none;
+        }
+        svg {
+          width: 40px;
         }
       }
     }
@@ -92,7 +95,7 @@ export const About = styled.section`
     height: calc(100vh - 250px);
   }
   @media (max-width: 768px) {
-    height: calc(100vh - 230px);
+    height: calc(100vh - 172px);
   }
 
   > div {
