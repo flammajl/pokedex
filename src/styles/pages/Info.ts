@@ -9,6 +9,10 @@ export const Info = styled.section`
       grid-template-columns: 150px 200px;
       gap: 5rem;
 
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr 1fr;
+      }
+
       & + div {
         margin-top: 32px;
       }
@@ -31,6 +35,7 @@ export const Info = styled.section`
         justify-content: space-between;
         align-items: center;
         font-size: 0.875rem;
+        flex-wrap: wrap;
 
         li {
           text-transform: capitalize;
@@ -48,6 +53,10 @@ export const BaseWrapper = styled.section`
       display: grid;
       grid-template-columns: 150px 200px;
       gap: 5rem;
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr 1fr;
+      }
 
       & + div {
         margin-top: 24px;
