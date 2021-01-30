@@ -60,6 +60,7 @@ const Pokemon: React.FC<PokemonProps> = ({ pokemonName }) => {
                     src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
                     width={50}
                     height={50}
+                    alt={pokemon.name}
                   />
                 </figure>
               </AvatarContainer>

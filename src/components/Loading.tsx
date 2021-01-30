@@ -1,10 +1,12 @@
 import { Container } from '@/styles/pages/Loading';
+import Pokeball from '../assets/pokeball-black.svg';
 
 const Loading: React.FC = () => {
   return (
     <>
       <Container>
-        <h1>Loading...</h1>
+        <Pokeball />
+        <p>Loading...</p>
       </Container>
     </>
   );
