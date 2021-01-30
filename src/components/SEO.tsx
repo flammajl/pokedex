@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Pokeball from '../assets/pokeball-og.jpg';
 
 interface SEOProps {
   title: string;
@@ -26,12 +25,18 @@ const SEO: React.FC<SEOProps> = ({ title }) => {
       <meta property="og:locale" content="pt_BR" />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={title} />
-      <meta property="og:image" content={Pokeball} />
-      <meta property="og:image:secure_url" content={Pokeball} />
+      <meta
+        property="og:image"
+        content="https://pokedex.flammajl.vercel.app/images/pokeball-og.jpg"
+      />
+      <meta
+        property="og:image:secure_url"
+        content="https://pokedex.flammajl.vercel.app/images/pokeball-og.jpg"
+      />
       <meta property="og:image:alt" content="Thumbnail" />
       <meta property="og:image:type" content="image/png" />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
+      <meta property="og:image:width" content="640" />
+      <meta property="og:image:height" content="427" />
     </Head>
   );
 };
