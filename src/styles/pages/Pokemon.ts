@@ -24,7 +24,7 @@ export const Section = styled(motion.section)<SectionColor>`
       align-items: center;
       justify-content: space-between;
 
-      @media (max-width: 1200px) {
+      @media (max-width: 1440px) {
         img {
           width: 250px;
         }
@@ -91,7 +91,7 @@ export const About = styled.section`
   border-top-right-radius: 50px;
   height: calc(100vh - 400px);
 
-  @media (max-width: 1200px) {
+  @media (max-width: 1440px) {
     height: calc(100vh - 250px);
   }
   @media (max-width: 768px) {
@@ -114,7 +114,7 @@ export const About = styled.section`
         background: none;
         border: none;
 
-        @media (max-width: 1200px) {
+        @media (max-width: 1440px) {
           font-size: 1.125rem;
         }
 
@@ -129,7 +129,7 @@ export const About = styled.section`
       top: -27%;
       right: 25%;
 
-      @media (max-width: 1200px) {
+      @media (max-width: 1440px) {
         img {
           width: 150px;
         }
@@ -142,9 +142,9 @@ export const About = styled.section`
       }
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1440px) {
       > figure {
-        top: -30%;
+        top: -27%;
         right: 10%;
       }
     }

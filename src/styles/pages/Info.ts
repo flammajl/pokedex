@@ -2,6 +2,11 @@ import styled from 'styled-components';
 
 export const Info = styled.section`
   margin-top: 48px;
+  padding-bottom: 72px;
+
+  @media (max-width: 768px) {
+    padding-bottom: 48px;
+  }
 
   > div {
     div {
@@ -47,6 +52,11 @@ export const Info = styled.section`
 
 export const BaseWrapper = styled.section`
   margin-top: 48px;
+  padding-bottom: 72px;
+
+  @media (max-width: 768px) {
+    padding-bottom: 48px;
+  }
 
   > div {
     div {
@@ -80,6 +90,11 @@ export const BaseWrapper = styled.section`
 
 export const MovesWrapper = styled.section`
   margin-top: 48px;
+  padding-bottom: 72px;
+
+  @media (max-width: 768px) {
+    padding-bottom: 48px;
+  }
 
   > div {
     display: grid;
